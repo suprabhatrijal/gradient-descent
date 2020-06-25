@@ -20,7 +20,7 @@ def predict(points, slope, intercept):
     return predict_list
 
 #Gives the RSS of the points and the prediction
-def RSS(points, prediction):
+def rss(points, prediction):
     rss = 0
     for i in range(0, len(prediction)):
         x = points[i][0]
@@ -31,7 +31,7 @@ def RSS(points, prediction):
     return rss
 
 #finds the derivative of the RSS w.r.t. slope and intercept
-def RSS_derivative(points,slope, intercept):
+def rss_derivative(points,slope, intercept):
     d_slope = 0
     d_intercept = 0
     for point in points:
@@ -43,10 +43,10 @@ def RSS_derivative(points,slope, intercept):
     return  {'slope':d_slope, 'intercept':d_intercept}
 
 #dictionary of derivatives of RSS w.r.t. slope and intercept 
-derivatives = RSS_derivative(li,m,c)
+derivatives = rss_derivative(li,m,c)
 
 
-print("RSS before regression: ", RSS(li, predict(li,m,c)))
+print("RSS before regression: ", rss(li, predict(li,m,c)))
 
 #algorithm
 while abs(derivatives['slope']) >= 0.001 or abs(derivatives['intercept']) >= 0.001:
@@ -55,12 +55,12 @@ while abs(derivatives['slope']) >= 0.001 or abs(derivatives['intercept']) >= 0.0
     m -= step_slope
     c -= step_intercept
 
-    derivatives = RSS_derivative(li, m, c)
+    derivatives = rss_derivative(li, m, c)
 
 
 
 print("Slope: ",m, "Intercept: ",c)
-print("RSS after regression: ", RSS(li, predict(li,m,c)))
+print("RSS after regression: ", rss(li, predict(li,m,c)))
 
 
 #Matplotlib to display the graph
